@@ -7,6 +7,7 @@
         <AssemblyName>OpenShock.Integrations.LethalCompany</AssemblyName>
         <TargetFramework>net472</TargetFramework>
         <LangVersion>12</LangVersion>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
@@ -26,6 +27,9 @@
     <ItemGroup>
       <Reference Include="Assembly-CSharp">
         <HintPath>E:\Games\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.Netcode.Runtime">
+        <HintPath>E:\Games\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>
       </Reference>
     </ItemGroup>
 
