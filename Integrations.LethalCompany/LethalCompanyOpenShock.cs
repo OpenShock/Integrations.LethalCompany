@@ -75,6 +75,7 @@ public class LethalCompanyOpenShock : BaseUnityPlugin
         _shockers.SettingChanged += (_, _) => ShockersSetup();
 
         SetupApi();
+        ShockersSetup();
 
         Logger.LogInfo("Started OpenShock.Integrations.LethalCompany");
     }
@@ -84,7 +85,11 @@ public class LethalCompanyOpenShock : BaseUnityPlugin
         var newList = new List<Guid>();
         foreach (var shocker in _shockers.Value.Split(','))
         {
-            if (Guid.TryParse(shocker, out var shockerGuid)) newList.Add(shockerGuid);
+            if (Guid.TryParse(shocker, out var shockerGuid))
+            {
+                Logger.LogInfo("Found shocker ID " + shockerGuid);
+                newList.Add(shockerGuid);
+            }
             else Logger.LogError($"Failed to parse shocker ID {shocker}");
         }
 

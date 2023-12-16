@@ -28,7 +28,7 @@ public class OpenShockApi
         Logger.LogInfo("Sending control request to OpenShock API");
         var requestMessage = new HttpRequestMessage(HttpMethod.Post, "/2/shockers/control")
         {
-            Content = new StringContent(JsonConvert.SerializeObject(new ControlRequest()
+            Content = new StringContent(JsonConvert.SerializeObject(new ControlRequest
             {
                 Shocks = shocks,
                 CustomName = "Integrations.LethalCompany"
