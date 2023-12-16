@@ -104,7 +104,7 @@ public class LethalCompanyOpenShock : BaseUnityPlugin
     public void OnDamage(int health, int damageNumber)
     {
         Logger.LogInfo($"Received damage, health is {health}, damage is {damageNumber}");
-
+        
         FireAndForgetControl(_settingOnDamageDuration.Value, (byte)Mathf.Clamp(damageNumber, 1, 100), ControlType.Shock);
     }
 
