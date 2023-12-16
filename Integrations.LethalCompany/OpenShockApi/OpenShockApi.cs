@@ -23,7 +23,7 @@ public class OpenShockApi
         _httpClient.DefaultRequestHeaders.Add("OpenShockToken", apiToken);
     }
 
-    public async Task Control(params Control[] shocks)
+    public async Task Control(IEnumerable<Control> shocks)
     {
         Logger.LogInfo("Sending control request to OpenShock API");
         var requestMessage = new HttpRequestMessage(HttpMethod.Post, "/2/shockers/control")
