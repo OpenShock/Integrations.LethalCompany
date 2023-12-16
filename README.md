@@ -2,7 +2,7 @@
 
 ## Installing
 ### Using r2modman
-Download the latest release and add the dll via the option, add local mod.
+Search for LethalOpenShock in Thunderstore and install via the mod manager of your choice!
 
 ## Configuration
 Make sure to setup your API Token & Shocker Id before usage
