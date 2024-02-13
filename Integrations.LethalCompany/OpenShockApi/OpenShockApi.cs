@@ -20,6 +20,7 @@ public class OpenShockApi
         {
             BaseAddress = server
         };
+        _httpClient.DefaultRequestHeaders.Add("User-Agent", $"OpenShock.Integrations.LethalCompany/{PluginInfo.PLUGIN_VERSION}");
         _httpClient.DefaultRequestHeaders.Add("OpenShockToken", apiToken);
     }
 
