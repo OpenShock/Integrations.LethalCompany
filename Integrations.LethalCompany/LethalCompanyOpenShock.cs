@@ -21,21 +21,22 @@ public class LethalCompanyOpenShock : BaseUnityPlugin
     private readonly Harmony _harmony = new(PluginInfo.PLUGIN_GUID);
 
     // Config
-    
+
     // OpenShock Server
     private ConfigEntry<string> _openShockServer = null!;
     private ConfigEntry<string> _openShockApiToken = null!;
     private ConfigEntry<string> _shockers = null!;
-    
+
     // Settings
-    
+
     // OnDeath
     private ConfigEntry<byte> _settingOnDeathIntensity = null!;
     private ConfigEntry<ushort> _settingOnDeathDuration = null!;
 
     // OnDamage
     private ConfigEntry<ushort> _settingOnDamageDuration = null!;
-    
+    private ConfigEntry<byte> _settingOnDamageIntensityLimit = null!;
+
     private IList<Guid> _shockersList = null!;
 
     private void Awake()
@@ -45,7 +46,7 @@ public class LethalCompanyOpenShock : BaseUnityPlugin
         Logger.LogInfo("Starting OpenShock.Integrations.LethalCompany");
 
         // Config
-        
+
         // OpenShock Server
         _openShockServer = Config.Bind<string>("OpenShock", "Server", "https://api.shocklink.net",
             "The URL of the OpenShock backend");
@@ -53,19 +54,21 @@ public class LethalCompanyOpenShock : BaseUnityPlugin
             "API token for authentication, can be found under API Tokens on the OpenShock dashboard (https://shocklink.net/#/dashboard/tokens)");
         _shockers = Config.Bind<string>("Shockers", "Shockers", "comma,seperated,list,of,shocker,ids",
             "A list of shocker IDs to use within the mod. Comma seperated.");
-        
-        
+
+
         // Settings
-        
+
         // OnDeath
         _settingOnDeathIntensity = Config.Bind<byte>("OnDeath", "Intensity", 100,
             "The intensity of the shocker when the player dies");
         _settingOnDeathDuration = Config.Bind<ushort>("OnDeath", "Duration", 5000,
             "The duration of the shocker when the player dies");
-        
+
         // OnDamage
         _settingOnDamageDuration = Config.Bind<ushort>("OnDamage", "Duration", 5000,
             "The duration of the shocker when the player takes damage");
+        _settingOnDamageIntensityLimit = Config.Bind<byte>("OnDamage", "IntensityLimit", 100,
+            "Intensity limit for the shocker when the player takes damage");
 
         Logger.LogDebug("Patching PlayerController");
         _harmony.PatchAll(typeof(PlayerControllerPatches));
@@ -104,8 +107,9 @@ public class LethalCompanyOpenShock : BaseUnityPlugin
     public void OnDamage(int health, int damageNumber)
     {
         Logger.LogInfo($"Received damage, health is {health}, damage is {damageNumber}");
-        
-        FireAndForgetControl(_settingOnDamageDuration.Value, (byte)Mathf.Clamp(damageNumber, 1, 100), ControlType.Shock);
+
+        FireAndForgetControl(_settingOnDamageDuration.Value, (byte)Mathf.Clamp(damageNumber, 1, _settingOnDamageIntensityLimit.Value),
+            ControlType.Shock);
     }
 
     private void FireAndForgetControl(ushort duration, byte intensity, ControlType type) =>
