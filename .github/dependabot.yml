@@ -1,13 +1,13 @@
 version: 2
 updates:
   # Weekly checks for nuget package updates
-  - package-ecosystem: 'npm'
+  - package-ecosystem: 'nuget'
     directory: '/'
     schedule:
       interval: 'weekly'
       day: thursday
       time: '06:00'
     groups:
-      npm-dependencies:
+      nuget:
         patterns:
           - '*' # Group all updates together
